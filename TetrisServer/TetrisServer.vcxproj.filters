@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ServerCore">
+      <UniqueIdentifier>{3c7198c2-743f-4c2c-8fdd-9643578343a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content">
+      <UniqueIdentifier>{c7a2b5dd-82b4-4a7f-a4db-58341f873b8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ServerCore\Network">
+      <UniqueIdentifier>{ad6f2565-5183-4529-902f-dd395bac5d83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ServerCore\mainpoint">
+      <UniqueIdentifier>{6721ffaa-529a-40fe-9e61-96b6e75e6bdb}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="TetrisServer.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="NetworkConnector.cpp">
+      <Filter>ServerCore\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalHeader.h">
+      <Filter>ServerCore\mainpoint</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="NetworkConnector.h">
+      <Filter>ServerCore\Network</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
