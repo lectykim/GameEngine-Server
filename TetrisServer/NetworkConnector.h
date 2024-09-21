@@ -1,7 +1,4 @@
 #pragma once
-
-#include "GlobalHeader.h"
-
 class NetworkConnector
 {
 public:

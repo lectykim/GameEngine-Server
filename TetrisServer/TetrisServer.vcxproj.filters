@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="소스 파일">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
     <Filter Include="리소스 파일">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
@@ -12,30 +8,135 @@
     <Filter Include="ServerCore">
       <UniqueIdentifier>{3c7198c2-743f-4c2c-8fdd-9643578343a3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Content">
-      <UniqueIdentifier>{c7a2b5dd-82b4-4a7f-a4db-58341f873b8f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ServerCore\Network">
       <UniqueIdentifier>{ad6f2565-5183-4529-902f-dd395bac5d83}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ServerCore\mainpoint">
+    <Filter Include="ServerCore\Thread">
+      <UniqueIdentifier>{2db300b6-3dcd-4f65-8820-23a3ac927d8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ServerCore\headers">
       <UniqueIdentifier>{6721ffaa-529a-40fe-9e61-96b6e75e6bdb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ServerCore\Util">
+      <UniqueIdentifier>{10c120b0-5095-479c-bf73-ca62ba32186d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ServerCore\Job">
+      <UniqueIdentifier>{bdeb9e57-0634-47e5-b7f3-487ee9f381a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainContent">
+      <UniqueIdentifier>{c7a2b5dd-82b4-4a7f-a4db-58341f873b8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ServerCore\pch">
+      <UniqueIdentifier>{c5757f30-fab6-40db-9bd6-d6426a686a93}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="TetrisServer.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="NetworkConnector.cpp">
       <Filter>ServerCore\Network</Filter>
     </ClCompile>
-    <ClCompile Include="GlobalHeader.h">
-      <Filter>ServerCore\mainpoint</Filter>
+    <ClCompile Include="IocpEvent.cpp">
+      <Filter>ServerCore\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="IocpCore.cpp">
+      <Filter>ServerCore\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="Listener.cpp">
+      <Filter>ServerCore\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="SocketUtils.cpp">
+      <Filter>ServerCore\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="Lock.cpp">
+      <Filter>ServerCore\Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="Service.cpp">
+      <Filter>ServerCore\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="Session.cpp">
+      <Filter>ServerCore\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="ThreadManager.cpp">
+      <Filter>ServerCore\Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="CoreTLS.cpp">
+      <Filter>ServerCore\headers</Filter>
+    </ClCompile>
+    <ClCompile Include="CoreGlobal.cpp">
+      <Filter>ServerCore\headers</Filter>
+    </ClCompile>
+    <ClCompile Include="LockQueue.cpp">
+      <Filter>ServerCore\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalQueue.cpp">
+      <Filter>ServerCore\Job</Filter>
+    </ClCompile>
+    <ClCompile Include="Job.cpp">
+      <Filter>ServerCore\Job</Filter>
+    </ClCompile>
+    <ClCompile Include="JobQueue.cpp">
+      <Filter>ServerCore\Job</Filter>
+    </ClCompile>
+    <ClCompile Include="JobTimer.cpp">
+      <Filter>ServerCore\Job</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>ServerCore\pch</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NetworkConnector.h">
       <Filter>ServerCore\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="IocpEvent.h">
+      <Filter>ServerCore\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="IocpCore.h">
+      <Filter>ServerCore\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="Listener.h">
+      <Filter>ServerCore\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="SocketUtils.h">
+      <Filter>ServerCore\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="Lock.h">
+      <Filter>ServerCore\Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="Session.h">
+      <Filter>ServerCore\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="Service.h">
+      <Filter>ServerCore\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadManager.h">
+      <Filter>ServerCore\Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="CoreTLS.h">
+      <Filter>ServerCore\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CoreGlobal.h">
+      <Filter>ServerCore\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="LockQueue.h">
+      <Filter>ServerCore\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="JobTimer.h">
+      <Filter>ServerCore\Job</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalQueue.h">
+      <Filter>ServerCore\Job</Filter>
+    </ClInclude>
+    <ClInclude Include="Job.h">
+      <Filter>ServerCore\Job</Filter>
+    </ClInclude>
+    <ClInclude Include="JobQueue.h">
+      <Filter>ServerCore\Job</Filter>
+    </ClInclude>
+    <ClInclude Include="CoreMacro.h">
+      <Filter>ServerCore\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>ServerCore\pch</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

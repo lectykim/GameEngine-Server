@@ -1,5 +1,5 @@
+#include "pch.h"
 #include "NetworkConnector.h"
-
 NetworkConnector::NetworkConnector(SOCKADDR_IN sockAddr) : _sockAddr(sockAddr)
 {
 }

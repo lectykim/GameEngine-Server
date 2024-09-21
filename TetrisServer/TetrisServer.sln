@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TetrisServer", "TetrisServe
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DummyClient", "..\DummyClient\DummyClient.vcxproj", "{94D1B0B6-9D52-4BD4-8E8B-147680816335}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ServerContents", "..\ServerContents\ServerContents.vcxproj", "{F62F9BE3-AA58-41A7-A538-21624D5DB0C4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +33,14 @@ Global
 		{94D1B0B6-9D52-4BD4-8E8B-147680816335}.Release|x64.Build.0 = Release|x64
 		{94D1B0B6-9D52-4BD4-8E8B-147680816335}.Release|x86.ActiveCfg = Release|Win32
 		{94D1B0B6-9D52-4BD4-8E8B-147680816335}.Release|x86.Build.0 = Release|Win32
+		{F62F9BE3-AA58-41A7-A538-21624D5DB0C4}.Debug|x64.ActiveCfg = Debug|x64
+		{F62F9BE3-AA58-41A7-A538-21624D5DB0C4}.Debug|x64.Build.0 = Debug|x64
+		{F62F9BE3-AA58-41A7-A538-21624D5DB0C4}.Debug|x86.ActiveCfg = Debug|Win32
+		{F62F9BE3-AA58-41A7-A538-21624D5DB0C4}.Debug|x86.Build.0 = Debug|Win32
+		{F62F9BE3-AA58-41A7-A538-21624D5DB0C4}.Release|x64.ActiveCfg = Release|x64
+		{F62F9BE3-AA58-41A7-A538-21624D5DB0C4}.Release|x64.Build.0 = Release|x64
+		{F62F9BE3-AA58-41A7-A538-21624D5DB0C4}.Release|x86.ActiveCfg = Release|Win32
+		{F62F9BE3-AA58-41A7-A538-21624D5DB0C4}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
