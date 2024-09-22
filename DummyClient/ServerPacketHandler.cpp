@@ -1,7 +1,7 @@
 #include "pch.h"
-#include "ClientPacketHandler.h"
-#include "Serializer.h"
+#include "ServerPacketHandler.h"
 PacketHandlerFunc GPacketHandler[UINT16_MAX];
+
 void HandleInvalid(const shared_ptr<PacketSession>& session, const shared_ptr<vector<PacketVariant>>& collection)
 {
 	cout << "Invalid calls" << endl;

@@ -4,7 +4,10 @@
 #include "IocpCore.h"
 #include "IocpEvent.h"
 #include "NetworkConnector.h"
-
+enum
+{
+	BUFFER_SIZE = 0x10000, //64KB
+};
 class Service;
 
 class Session : public IocpObject
@@ -14,10 +17,7 @@ class Session : public IocpObject
 	friend class IocpCore;
 	friend class Service;
 	
-	enum
-	{
-		BUFFER_SIZE = 0x10000, //64KB
-	};
+	
 
 public:
 	Session();
@@ -70,7 +70,7 @@ private:
 private:
 	USE_LOCK;
 
-	shared_ptr<BYTE*> _recvBuffer;
+	BYTE* _recvBuffer;
 
 	queue < shared_ptr<BYTE*>> _sendQueue;
 	atomic<bool> _sendRegistered = false;

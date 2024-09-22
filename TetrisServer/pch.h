@@ -27,6 +27,8 @@ using namespace std;
 
 #include "Lock.h"
 #include "Session.h"
+#include "ThreadManager.h"
+#include "Service.h"
 #include "JobQueue.h"
 
 template<typename T>
@@ -34,3 +36,6 @@ inline shared_ptr<T> make_array(int size)
 {
 	return std::shared_ptr<T>(new T[size], [](T* p) {delete[] p; });
 }
+
+template<class... Ts> struct overloaded : Ts... {using Ts::operator()...; };
+template<class... Ts> overloaded(Ts...) -> overloaded<Ts...>;

@@ -34,6 +34,9 @@ bool Listener::StartAccept(shared_ptr<ServerService> service)
 	if (SocketUtils::SetLinger(_socket, 0, 0) == false)
 		return false;
 
+	if (SocketUtils::Bind(_socket, _service->GetNetAddress()) == false)
+		return false;
+
 	if (SocketUtils::Listen(_socket) == false)
 		return false;
 
@@ -71,10 +74,11 @@ void Listener::RegisterAccept(AcceptEvent* acceptEvent)
 
 	acceptEvent->Init();
 	acceptEvent->session = session;
-
+	session->_recvBuffer = new BYTE[BUFFER_SIZE];
+	
 
 	DWORD bytesReceived = 0;
-	if (false == SocketUtils::AcceptEx(_socket, session->GetSocket(), *session->_recvBuffer.get(), 0, sizeof(SOCKADDR_IN) + 16,
+	if (false == SocketUtils::AcceptEx(_socket, session->GetSocket(), session->_recvBuffer, 0, sizeof(SOCKADDR_IN) + 16,
 		sizeof(SOCKADDR_IN) + 16, OUT & bytesReceived, static_cast<LPOVERLAPPED>(acceptEvent)))
 	{
 		const int errCode = ::WSAGetLastError();

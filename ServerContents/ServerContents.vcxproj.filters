@@ -16,19 +16,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\TetrisServer\GameSession.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\TetrisServer\GameSessionManager.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\TetrisServer\TetrisServer.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>Pch</Filter>
     </ClCompile>
-    <ClCompile Include="DeSerilizer.cpp">
+    <ClCompile Include="DeSerializer.cpp">
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="Serializer.cpp">
@@ -43,21 +34,24 @@
     <ClCompile Include="ClientPacketHandler.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="GameSession.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSessionManager.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="TetrisServer.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\TetrisServer\GameSession.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\TetrisServer\GameSessionManager.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>Pch</Filter>
     </ClInclude>
     <ClInclude Include="Serializer.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="DeSerilizer.h">
+    <ClInclude Include="DeSerializer.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Room.h">
@@ -67,6 +61,12 @@
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="ClientPacketHandler.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSession.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSessionManager.h">
       <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>

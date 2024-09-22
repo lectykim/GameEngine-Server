@@ -1,7 +1,4 @@
 #pragma once
-
-#define WIN32_LEAN_AND_MEAN
-
 #ifdef _DEBUG
 #pragma comment(lib,"..\\TetrisServer\\x64\\Debug\\TetrisServer.lib")
 #else
@@ -17,4 +14,4 @@
 
 #include "../TetrisServer/pch.h"
 
-using PacketVariant = variant<uint8_t, uint16_t, double, string,uint16_t*,double*>;
+using PacketVariant = variant<uint8_t, uint16_t, double, string, uint16_t*, double*>;

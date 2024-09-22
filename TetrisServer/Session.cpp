@@ -4,7 +4,7 @@
 #include "Service.h"
 
 
-Session::Session() : _recvBuffer(make_array<BYTE *>(BUFFER_SIZE))
+Session::Session()
 {
 	_socket = SocketUtils::CreateSocket();
 }
@@ -135,7 +135,7 @@ void Session::RegisterRecv()
 	_recvEvent.owner = shared_from_this();
 
 	WSABUF wsaBuf;
-	wsaBuf.buf = reinterpret_cast<char*>(_recvBuffer.get());
+	wsaBuf.buf = reinterpret_cast<char*>(_recvBuffer);
 	wsaBuf.len = BUFFER_SIZE;
 
 	DWORD numOfBytes = 0;
@@ -231,7 +231,7 @@ void Session::ProcessRecv(int numOfBytes)
 
 	//OverFlow가 일어날 일이 없음, 매 번 새로운 Buffer을 생성해 줄 것이기 때문.
 
-	int processLen = OnRecv(*_recvBuffer.get(), sizeof(_recvBuffer.get()));
+	int processLen = OnRecv(_recvBuffer, sizeof(_recvBuffer));
 
 	RegisterRecv();
 }

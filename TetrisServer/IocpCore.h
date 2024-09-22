@@ -13,7 +13,7 @@ public:
 	IocpCore();
 	~IocpCore();
 
-	HANDLE GetHandle() { return _iocpHandle; }
+	HANDLE GetHandle()const  { return _iocpHandle; }
 
 	bool Register(shared_ptr<IocpObject> iocpObject);
 	bool Dispatch(uint32_t timeoutMs = INFINITE);

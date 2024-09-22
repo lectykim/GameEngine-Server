@@ -1,8 +1,7 @@
 ﻿#include "pch.h"
-#include "ThreadManager.h"
-#include "Service.h"
-#include "Session.h"
+
 #include "GameSession.h"
+#include "ClientPacketHandler.h"
 enum
 {
     WORKER_TICK = 64
@@ -29,7 +28,7 @@ int main()
     //그러나 make_shared를 이중으로 쓰는 경우에는
     //전처리기가 '모호한 타입'으로 판단해버려서 빌드가 불가능하다
     //그럴 때에는 캐스팅을 통해 타입을 명시해줌으로서 상황 타파가 가능하다.
-
+    ClientPacketHandler::Init();
     
     shared_ptr<ServerService> service = make_shared<ServerService>(
         NetworkConnector(L"127.0.0.1", 7777),

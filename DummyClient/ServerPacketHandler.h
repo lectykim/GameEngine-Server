@@ -1,8 +1,4 @@
 #pragma once
-
-
-#include "Packets.h"
-#include <variant>
 using PacketHandlerFunc = function<void(const shared_ptr<PacketSession>&, const shared_ptr<vector<PacketVariant>>&)>;
 extern PacketHandlerFunc GPacketHandler[UINT16_MAX];
 
@@ -15,7 +11,8 @@ enum PacketNumber : uint16_t
 void HandleInvalid(const shared_ptr<PacketSession>& session, const shared_ptr<vector<PacketVariant>>& collection);
 void HandleCreateRoom(const shared_ptr<PacketSession>& session, const shared_ptr<vector<PacketVariant>>& collection);
 void HandleEnterRoom(const shared_ptr<PacketSession>& session, const shared_ptr<vector<PacketVariant>>& collection);
-class ClientPacketHandler 
+
+class ServerPacketHandler
 {
 public:
 	static void Init()
@@ -35,7 +32,7 @@ public:
 			uint16_t* id = get_if<uint16_t>(&collection->front());
 			GPacketHandler[*id](session, collection);
 		}
-		
-	}
 
+	}
 };
+

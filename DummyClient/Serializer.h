@@ -16,6 +16,6 @@ struct PacketStructure
 class Serializer
 {
 public:
-	static PacketStructure* Serialization(const PacketHeader& header,const shared_ptr<vector<PacketVariant>>& collection);
+	static PacketStructure* Serialization(const PacketHeader& header, const shared_ptr<vector<PacketVariant>>& collection);
 };
 
