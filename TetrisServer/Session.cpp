@@ -4,7 +4,7 @@
 #include "Service.h"
 
 
-Session::Session()
+Session::Session():_recvBuffer(new BYTE[BUFFER_SIZE])
 {
 	_socket = SocketUtils::CreateSocket();
 }
@@ -81,7 +81,7 @@ void Session::Dispatch(IocpEvent* iocpEvent, int numOfBytes)
 bool Session::RegisterConnect()
 {
 	if (IsConnected())
-		false;
+		return false;
 	if (GetService()->GetServiceType() != ServiceType::Client)
 		return false;
 
@@ -202,7 +202,7 @@ void Session::RegisterSend()
 void Session::ProcessConnect()
 {
 	_connectEvent.owner = nullptr;
-	_connected.store(false);
+	_connected.store(true);
 
 	GetService()->AddSession(GetSessionRef());
 

@@ -74,7 +74,6 @@ void Listener::RegisterAccept(AcceptEvent* acceptEvent)
 
 	acceptEvent->Init();
 	acceptEvent->session = session;
-	session->_recvBuffer = new BYTE[BUFFER_SIZE];
 	
 
 	DWORD bytesReceived = 0;

@@ -15,7 +15,7 @@ public:
 	virtual void OnConnected() override
 	{
 
-
+		cout << "Connected" << endl;
 
 	}
 
@@ -36,7 +36,7 @@ public:
 
 	virtual void OnDisconnected() override
 	{
-		//cout << "Disconnected" << endl;
+		cout << "Disconnected" << endl;
 	}
 };
 
@@ -69,17 +69,32 @@ int main()
 		while (true)
 		{
 			int menu = 0;
-			cout << "1. create room, 2. enter room" << endl;
+			cout << "1. create room, 2. enter room, 3: exit" << endl;
 
 			cin >> menu;
 			switch (menu)
 			{
 			case 1:
 			{
+				string password = "password";
+				shared_ptr<vector<PacketVariant>> collection = make_shared<vector<PacketVariant>>();
+				collection->emplace_back(password);
+				PacketHeader header;
+				header.id = PKT_CREATE_ROOM;
+				header.size = 0;
+				auto packet = Serializer::Serialization(header, collection);
+				shared_ptr<BYTE*> buf = make_shared<BYTE*>(new BYTE[packet->len]);
+				::memcpy(buf.get(), packet->buffer, packet->len);
+				service->Broadcast(std::move(buf));
 				break;
 			}
 			case 2:
 			{
+				break;
+			}
+			case 3:
+			{
+				service->CloseService();
 				break;
 			}
 			default:

@@ -33,6 +33,13 @@ bool IocpCore::Dispatch(uint32_t timeoutMs)
 		{
 		case WAIT_TIMEOUT:
 			return false;
+		/*case ERROR_NETNAME_DELETED:
+		{
+			shared_ptr<IocpObject> iocpObject = iocpEvent->owner;
+			iocpEvent->eventType = EventType::Disconnect;
+			iocpObject->Dispatch(iocpEvent, numOfBytes);
+			break;
+		}*/
 		default:
 			cout << errCode << endl;
 			shared_ptr<IocpObject> iocpObject = iocpEvent->owner;

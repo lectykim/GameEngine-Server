@@ -14,7 +14,13 @@ Service::~Service()
 
 void Service::CloseService()
 {
-	// TODO
+	WRITE_LOCK;
+	for (const auto& session : _sessions)
+	{
+		session->Disconnect(L"Exit Call");
+	}
+	_sessions.clear();
+	_sessionCount = 0;
 }
 
 void Service::Broadcast(shared_ptr<BYTE*> buffer)

@@ -4,11 +4,12 @@
 #include "ClientPacketHandler.h"
 void GameSession::OnConnected()
 {
-	wcout << GetSessionRef()->GetAddress().GetIpAddress() << endl;
+	wcout << L"Connected : " << GetSessionRef()->GetAddress().GetIpAddress() << endl;
 }
 
 void GameSession::OnDisconnected()
 {
+	wcout  << L"DisConnected" << GetSessionRef()->GetAddress().GetIpAddress() << endl;
 }
 
 void GameSession::OnRecvPacket(BYTE* buffer, int len)
