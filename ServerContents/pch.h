@@ -11,10 +11,7 @@
 #include <unordered_map>
 #include <array>
 
-#include <variant>
-
 
 
 #include "../TetrisServer/pch.h"
 
-using PacketVariant = variant<uint8_t, uint16_t, uint64_t, string,uint16_t*,uint64_t*>;

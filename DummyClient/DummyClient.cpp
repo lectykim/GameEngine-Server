@@ -1,7 +1,7 @@
 ﻿#include "pch.h"
 #include "ServerPacketHandler.h"
-#include "DeSerializer.h"
-#include "Serializer.h"
+
+//#include "DeSerializer.h"
 char sendData[] = "Hello World";
 
 class ServerSession : public PacketSession
@@ -25,8 +25,8 @@ public:
 		PacketHeader* header = reinterpret_cast<PacketHeader*>(buffer);
 
 		//TODO : PacketId 대역 체크
-		auto collection = DeSerilizer::DeSerialize(buffer, len);
-		ServerPacketHandler::HandlePacket(session, collection);
+		/*auto collection = DeSerilizer::DeSerialize(buffer, len);
+		ServerPacketHandler::HandlePacket(session, collection);*/
 	}
 
 	virtual void OnSend(int len) override
@@ -42,6 +42,9 @@ public:
 
 int main()
 {
+
+
+
 	ServerPacketHandler::Init();
 	this_thread::sleep_for(1s);
 
@@ -76,19 +79,35 @@ int main()
 			{
 			case 1:
 			{
-				uint16_t roomId = 1;
-				string id = "id";
-				string password = "password";
+				uint8_t sampleId = 10;
+				uint16_t roomId = 655;
+				string id = "password";
+				uint64_t bigId = 2133213213;
+				uint16_t sampleArr[10] = { 0, };
+				sampleArr[0] = 3;
+				sampleArr[1] = 2;
+				sampleArr[2] = 1;
+				sampleArr[3] = UINT16_MAX;
+				uint64_t sampleBigArr[10] = { 0, };
+				sampleBigArr[0] = 3;
+				sampleBigArr[1] = 2;
+				sampleBigArr[2] = 1;
+				sampleBigArr[3] = UINT64_MAX;
 				vector<PacketVariant> collection;
 				collection.emplace_back(roomId);
 				collection.emplace_back(id);
-				collection.emplace_back(password);
+				collection.emplace_back(bigId);
+				collection.emplace_back(sampleArr);
+				collection.emplace_back(sampleBigArr);
 				auto buffer = ServerPacketHandler::MakeSendBuffer(collection, PKT_CREATE_ROOM);
 				service->Broadcast(buffer);
 				break;
 			}
 			case 2:
 			{
+
+
+
 				break;
 			}
 			case 3:

@@ -130,16 +130,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="DeSerializer.cpp" />
     <ClCompile Include="DummyClient.cpp" />
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="Serializer.cpp" />
     <ClCompile Include="ServerPacketHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DeSerializer.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Serializer.h" />
     <ClInclude Include="ServerPacketHandler.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

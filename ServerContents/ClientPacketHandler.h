@@ -3,7 +3,6 @@
 
 #include "Packets.h"
 #include <variant>
-#include "Serializer.h"
 using PacketHandlerFunc = function<void(const shared_ptr<PacketSession>&, const shared_ptr<vector<PacketVariant>>&)>;
 extern PacketHandlerFunc GPacketHandler[UINT16_MAX];
 
@@ -27,15 +26,11 @@ public:
 		GPacketHandler[PKT_ENTER_ROOM] = HandleEnterRoom;
 	}
 
-	static void HandlePacket(const shared_ptr<PacketSession>& session, const shared_ptr< vector<PacketVariant>>& collection)
+	static void HandlePacket(const shared_ptr<PacketSession>& session,
+		const shared_ptr< vector<PacketVariant>>& collection,
+		PacketHeader* header)
 	{
-		if (collection->empty())
-			GPacketHandler[0](session, collection);
-		else
-		{
-			uint16_t* id = get_if<uint16_t>(&collection->front());
-			GPacketHandler[*id](session, collection);
-		}
+		GPacketHandler[header->id](session, collection);
 		
 	}
 

@@ -88,6 +88,12 @@
     <ClCompile Include="RecvBuffer.cpp">
       <Filter>ServerCore\Util</Filter>
     </ClCompile>
+    <ClCompile Include="Serializer.cpp">
+      <Filter>ServerCore\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="DeSerializer.cpp">
+      <Filter>ServerCore\Util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NetworkConnector.h">
@@ -148,6 +154,12 @@
       <Filter>ServerCore\Util</Filter>
     </ClInclude>
     <ClInclude Include="RecvBuffer.h">
+      <Filter>ServerCore\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Serializer.h">
+      <Filter>ServerCore\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="DeSerializer.h">
       <Filter>ServerCore\Util</Filter>
     </ClInclude>
   </ItemGroup>

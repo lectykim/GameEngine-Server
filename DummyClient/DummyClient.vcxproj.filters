@@ -22,24 +22,12 @@
     <ClCompile Include="ServerPacketHandler.cpp">
       <Filter>Main</Filter>
     </ClCompile>
-    <ClCompile Include="DeSerializer.cpp">
-      <Filter>Main</Filter>
-    </ClCompile>
-    <ClCompile Include="Serializer.cpp">
-      <Filter>Main</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
       <Filter>Pch</Filter>
     </ClInclude>
     <ClInclude Include="ServerPacketHandler.h">
-      <Filter>Main</Filter>
-    </ClInclude>
-    <ClInclude Include="Serializer.h">
-      <Filter>Main</Filter>
-    </ClInclude>
-    <ClInclude Include="DeSerializer.h">
       <Filter>Main</Filter>
     </ClInclude>
   </ItemGroup>

@@ -19,12 +19,6 @@
     <ClCompile Include="pch.cpp">
       <Filter>Pch</Filter>
     </ClCompile>
-    <ClCompile Include="DeSerializer.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Serializer.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="Room.cpp">
       <Filter>Content</Filter>
     </ClCompile>
@@ -47,12 +41,6 @@
   <ItemGroup>
     <ClInclude Include="pch.h">
       <Filter>Pch</Filter>
-    </ClInclude>
-    <ClInclude Include="Serializer.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="DeSerializer.h">
-      <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Room.h">
       <Filter>Content</Filter>

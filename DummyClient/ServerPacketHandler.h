@@ -1,5 +1,4 @@
 #pragma once
-#include "Serializer.h"
 using PacketHandlerFunc = function<void(const shared_ptr<PacketSession>&, const shared_ptr<vector<PacketVariant>>&)>;
 extern PacketHandlerFunc GPacketHandler[UINT16_MAX];
 
