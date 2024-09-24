@@ -1,82 +1,144 @@
 #include "pch.h"
 #include "Serializer.h"
 
-PacketStructure* Serializer::Serialization(const PacketHeader& header, const shared_ptr<vector<PacketVariant>>& collection)
+bool Serializer::Serialization(const vector<PacketVariant>& collection,BYTE* pos,uint16_t len)
 {
-	BYTE* buffer = new BYTE;
-	PacketHeader* headerWritePos = reinterpret_cast<PacketHeader*>(buffer);
-	headerWritePos->id = header.id;
-	headerWritePos->size = 0;
-
-	BYTE* bodyWritePos = reinterpret_cast<BYTE*>(&headerWritePos[1]);
-
-	
-
 	int currentByte = 0;
-	for (auto it = collection->begin();it != collection->end();it++)
+	for (auto it = collection.begin();it != collection.end();it++)
 	{
 		
 		visit(overloaded{
-			[&bodyWritePos,&currentByte](uint8_t arg) 
+			[&pos,&currentByte](uint8_t arg) 
 			{
-				bodyWritePos[currentByte] = 0;
+				::memcpy(pos+currentByte,reinterpret_cast<const void*>(0x0001),1);
 				currentByte++;
-				bodyWritePos[currentByte] = arg;
+				::memcpy(pos + currentByte, reinterpret_cast<const void*>(arg), sizeof(arg));
 				currentByte += sizeof(arg);
 			},
-			[&bodyWritePos,&currentByte](uint16_t arg) 
+			[&pos,&currentByte](uint16_t arg) 
 			{
-				bodyWritePos[currentByte] = 1;
+				::memcpy(pos + currentByte,reinterpret_cast<const void*>(0x0002),1);
 				currentByte++;
-				bodyWritePos[currentByte] = arg;
+				::memcpy(pos + currentByte, reinterpret_cast<const void*>(arg), sizeof(arg));
 				currentByte += sizeof(arg);
 			},
-			[&bodyWritePos,&currentByte](string arg) 
+			[&pos,&currentByte](string arg) 
 			{
-				bodyWritePos[currentByte] = 2;
+				::memcpy(pos + currentByte,reinterpret_cast<const void*>(0x0003),1);
 				currentByte++;
-				bodyWritePos[currentByte] = static_cast<uint16_t>(sizeof(arg.c_str()));
-				currentByte += static_cast<uint16_t>(sizeof(arg.c_str()));
-				::memcpy(bodyWritePos, arg.c_str(), sizeof(arg.c_str()));
-				currentByte += sizeof(arg.c_str());
+				uint16_t strLen = static_cast<uint16_t>(sizeof(arg.c_str()));
+				::memcpy(pos + currentByte, reinterpret_cast<const void*>(strLen), sizeof(uint16_t));
+				currentByte += sizeof(uint16_t);
+				::memcpy(pos+currentByte, arg.c_str(), strlen(arg.c_str()));
+				currentByte += strlen(arg.c_str());
 			},
-			[&bodyWritePos,&currentByte](double arg) 
+			[&pos,&currentByte](uint64_t arg) 
 			{
-				bodyWritePos[currentByte] = 3;
+				::memcpy(pos + currentByte,reinterpret_cast<const void*>(0x0004),1);
 				currentByte++;
-				bodyWritePos[currentByte] = arg;
+				::memcpy(pos + currentByte, reinterpret_cast<void*>(arg), sizeof(arg));
 				currentByte += sizeof(arg);
 			},
-			[&bodyWritePos,&currentByte](uint16_t* arg) 
+			[&pos,&currentByte](uint16_t* arg) 
 			{
-				bodyWritePos[currentByte] = 4;
+				::memcpy(pos + currentByte,reinterpret_cast<const void*>(0x0005),1);
 				currentByte++;
 				int arraySize = 0;
 				uint16_t tempArrayValue = arg[arraySize];
 				while (tempArrayValue != UINT16_MAX)
 				{
-					tempArrayValue = arg[++arraySize];
+					::memcpy(pos + currentByte, reinterpret_cast<const void*>(tempArrayValue), sizeof(uint16_t));
+					currentByte += sizeof(uint16_t);
+					arraySize++;
+					tempArrayValue = arg[arraySize];
 				}
-				::memcpy(bodyWritePos, arg, sizeof(uint16_t) * (--arraySize));
-				currentByte += sizeof(uint16_t) * (arraySize);
+				::memcpy(pos + currentByte, reinterpret_cast<const void*>(UINT16_MAX), sizeof(uint16_t));
+				currentByte += sizeof(uint16_t);
 			},
-			[&bodyWritePos,&currentByte](double* arg) 
+			[&pos,&currentByte](uint64_t* arg) 
 			{
-				bodyWritePos[currentByte] = 5;
+				::memcpy(pos + currentByte,reinterpret_cast<const void*>(0x0006),1);
 				currentByte++;
 				int arraySize = 0;
-				double tempArrayValue = arg[arraySize];
+				uint64_t tempArrayValue = arg[arraySize];
 				while (tempArrayValue != UINT64_MAX)
 				{
-					tempArrayValue = arg[++arraySize];
+					::memcpy(pos + currentByte, reinterpret_cast<const void*>(tempArrayValue), sizeof(uint64_t));
+					currentByte += sizeof(uint64_t);
+					arraySize++;
+					tempArrayValue = arg[arraySize];
 				}
-				::memcpy(bodyWritePos, arg, sizeof(double) * (--arraySize));
+				::memcpy(pos + currentByte, reinterpret_cast<const void*>(UINT64_MAX), sizeof(uint64_t));
+				currentByte += sizeof(uint64_t);
+			}
+			}, *it);
+	}
+
+	if (currentByte != len)
+	{
+		cout << "Serialization Failed" << endl;
+		return false;
+	}
+	return true;
+		
+
+}
+
+long Serializer::GetDataSize(const vector<PacketVariant>& collection)
+{
+	long currentByte = 0;
+	for (auto it = collection.begin(); it != collection.end(); it++)
+	{
+		visit(overloaded{
+			[&currentByte](uint8_t arg)
+			{
+				//1 + 1 = 2바이트 추가
+				currentByte++;
+				currentByte += sizeof(arg);
+			},
+			[&currentByte](uint16_t arg)
+			{
+				// 1 + 2 = 3바이트 추가
+				currentByte++;
+				currentByte += sizeof(arg);
+			},
+			[&currentByte](string arg)
+			{
+				// 1 + strlen(2) + str char data (1*N) 바이트 추가
+				currentByte++;
+				currentByte += static_cast<uint16_t>(sizeof(arg.c_str()));
+				currentByte += sizeof(arg.c_str());
+			},
+			[&currentByte](uint64_t arg)
+			{
+				// 1+ 8바이트 추가
+				currentByte++;
+				currentByte += sizeof(arg);
+			},
+			[&currentByte](uint16_t* arg)
+			{
+				// 1+(2*N) 바이트 추가
+				currentByte++;
+				int arraySize = 0;
+				while (arg[arraySize++] != UINT64_MAX)
+				{
+
+				}
+				currentByte += sizeof(uint16_t) * (arraySize);
+			},
+			[&currentByte](uint64_t* arg)
+			{
+				//1 + (8*N) 바이트 추가
+				currentByte++;
+				int arraySize = 0;
+				while (arg[arraySize++] != UINT64_MAX)
+				{
+
+				}
 				currentByte += sizeof(double) * (arraySize);
 			}
 			}, *it);
 	}
-	currentByte += sizeof(PacketHeader);
 
-	return new PacketStructure{ buffer, currentByte };
-
+	return currentByte;
 }

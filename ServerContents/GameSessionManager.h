@@ -11,7 +11,7 @@ class GameSessionManager
 public:
 	void Add(shared_ptr<GameSession> session);
 	void Remove(shared_ptr<GameSession> session);
-	void Broadcast(shared_ptr<BYTE*> buffer);
+	void Broadcast(shared_ptr<SendBuffer> buffer);
 
 private:
 	USE_LOCK;

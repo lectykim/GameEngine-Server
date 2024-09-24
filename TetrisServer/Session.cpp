@@ -2,9 +2,9 @@
 #include "Session.h"
 #include "SocketUtils.h"
 #include "Service.h"
+#include "SendBuffer.h"
 
-
-Session::Session():_recvBuffer(new BYTE[BUFFER_SIZE])
+Session::Session():_recvBuffer(BUFFER_SIZE)
 {
 	_socket = SocketUtils::CreateSocket();
 }
@@ -14,7 +14,7 @@ Session::~Session()
 	SocketUtils::Close(_socket);
 }
 
-void Session::Send(shared_ptr<BYTE*> buffer)
+void Session::Send(shared_ptr<SendBuffer> sendBuffer)
 {
 	if (IsConnected() == false)
 		return;
@@ -24,7 +24,7 @@ void Session::Send(shared_ptr<BYTE*> buffer)
 	{
 		WRITE_LOCK;
 
-		_sendQueue.push(buffer);
+		_sendQueue.push(sendBuffer);
 
 		if (_sendRegistered.exchange(true) == false)
 			registerSend = true;
@@ -135,8 +135,8 @@ void Session::RegisterRecv()
 	_recvEvent.owner = shared_from_this();
 
 	WSABUF wsaBuf;
-	wsaBuf.buf = reinterpret_cast<char*>(_recvBuffer);
-	wsaBuf.len = BUFFER_SIZE;
+	wsaBuf.buf = reinterpret_cast<char*>(_recvBuffer.WritePos());
+	wsaBuf.len = _recvBuffer.FreeSize();
 
 	DWORD numOfBytes = 0;
 	DWORD flags = 0;
@@ -166,8 +166,8 @@ void Session::RegisterSend()
 
 		while (_sendQueue.empty() == false)
 		{
-			shared_ptr<BYTE*> buffer = _sendQueue.front();
-			writeSize += sizeof(buffer.get());
+			shared_ptr<SendBuffer> buffer = _sendQueue.front();
+			writeSize += buffer->WriteSize();
 
 			_sendQueue.pop();
 			_sendEvent.sendBuffers.emplace_back(buffer);
@@ -176,11 +176,11 @@ void Session::RegisterSend()
 
 	vector<WSABUF> wsaBufs;
 	wsaBufs.reserve(_sendEvent.sendBuffers.size());
-	for (shared_ptr<BYTE*> buffer : _sendEvent.sendBuffers)
+	for (shared_ptr<SendBuffer> buffer : _sendEvent.sendBuffers)
 	{
 		WSABUF wsaBuf;
-		wsaBuf.buf = reinterpret_cast<char*>(buffer.get());
-		wsaBuf.len = static_cast<long>(sizeof(buffer.get()));
+		wsaBuf.buf = reinterpret_cast<char*>(buffer->Buffer());
+		wsaBuf.len = static_cast<long>(buffer->WriteSize());
 		wsaBufs.emplace_back(wsaBuf);
 	}
 
@@ -229,10 +229,24 @@ void Session::ProcessRecv(int numOfBytes)
 		return;
 	}
 
-	//OverFlow가 일어날 일이 없음, 매 번 새로운 Buffer을 생성해 줄 것이기 때문.
+	if (_recvBuffer.OnWrite(numOfBytes) == false)
+	{
+		Disconnect(L"OnWrite Overflow");
+		return;
+	}
 
-	int processLen = OnRecv(_recvBuffer, sizeof(_recvBuffer));
+	int32_t dataSize = _recvBuffer.DataSize();
+	int32_t processLen = OnRecv(_recvBuffer.ReadPos(), dataSize); // 컨텐츠 코드에서 재정의
+	if (processLen < 0 || dataSize < processLen || _recvBuffer.OnRead(processLen) == false)
+	{
+		Disconnect(L"OnRead Overflow");
+		return;
+	}
 
+	// 커서 정리
+	_recvBuffer.Clean();
+
+	// 수신 등록
 	RegisterRecv();
 }
 

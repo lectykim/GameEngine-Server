@@ -34,7 +34,7 @@ int main()
         NetworkConnector(L"127.0.0.1", 7777),
         make_shared<IocpCore>(),
         static_cast<SessionFactory>(make_shared<GameSession>),
-        5);
+        10000);
 
     service->Start();
 

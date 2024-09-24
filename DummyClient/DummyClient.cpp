@@ -76,16 +76,15 @@ int main()
 			{
 			case 1:
 			{
+				uint16_t roomId = 1;
+				string id = "id";
 				string password = "password";
-				shared_ptr<vector<PacketVariant>> collection = make_shared<vector<PacketVariant>>();
-				collection->emplace_back(password);
-				PacketHeader header;
-				header.id = PKT_CREATE_ROOM;
-				header.size = 0;
-				auto packet = Serializer::Serialization(header, collection);
-				shared_ptr<BYTE*> buf = make_shared<BYTE*>(new BYTE[packet->len]);
-				::memcpy(buf.get(), packet->buffer, packet->len);
-				service->Broadcast(std::move(buf));
+				vector<PacketVariant> collection;
+				collection.emplace_back(roomId);
+				collection.emplace_back(id);
+				collection.emplace_back(password);
+				auto buffer = ServerPacketHandler::MakeSendBuffer(collection, PKT_CREATE_ROOM);
+				service->Broadcast(buffer);
 				break;
 			}
 			case 2:

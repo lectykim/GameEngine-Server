@@ -4,6 +4,7 @@
 
 #include <mutex>
 #include <atomic>
+#include <memory>
 using BYTE = unsigned char;
 #include "CoreMacro.h"
 #include "CoreTLS.h"
@@ -30,6 +31,8 @@ using namespace std;
 #include "ThreadManager.h"
 #include "Service.h"
 #include "JobQueue.h"
+#include "SendBuffer.h"
+#include "RecvBuffer.h"
 
 template<typename T>
 inline shared_ptr<T> make_array(int size)

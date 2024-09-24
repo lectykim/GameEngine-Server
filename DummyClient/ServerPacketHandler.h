@@ -1,4 +1,5 @@
 #pragma once
+#include "Serializer.h"
 using PacketHandlerFunc = function<void(const shared_ptr<PacketSession>&, const shared_ptr<vector<PacketVariant>>&)>;
 extern PacketHandlerFunc GPacketHandler[UINT16_MAX];
 
@@ -34,5 +35,26 @@ public:
 		}
 
 	}
+
+	static shared_ptr<SendBuffer> MakeSendBuffer(const vector<PacketVariant>& collection, uint16_t pktId)
+	{
+
+		const uint16_t dataSize = static_cast<uint16_t>(Serializer::GetDataSize(collection));
+		const uint16_t pktSize = dataSize + sizeof(PacketHeader);
+
+		shared_ptr<SendBuffer> sendBuffer = GSendBufferManager->Open(pktSize);
+		PacketHeader* header = reinterpret_cast<PacketHeader*>(sendBuffer->Buffer());
+		header->size = pktSize;
+		header->id = pktId;
+		if (Serializer::Serialization(collection, reinterpret_cast<BYTE*>(&header[1]), dataSize) == false)
+		{
+			return nullptr;
+		}
+		else
+		{
+			sendBuffer->Close(pktSize);
+			return sendBuffer;
+		}
+	};
 };
 
